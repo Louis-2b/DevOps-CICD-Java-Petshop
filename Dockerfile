@@ -1,21 +1,17 @@
-#
-#    Copyright 2010-2023 the original author or authors.
-#
-#    Licensed under the Apache License, Version 2.0 (the "License");
-#    you may not use this file except in compliance with the License.
-#    You may obtain a copy of the License at
-#
-#       https://www.apache.org/licenses/LICENSE-2.0
-#
-#    Unless required by applicable law or agreed to in writing, software
-#    distributed under the License is distributed on an "AS IS" BASIS,
-#    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-#    See the License for the specific language governing permissions and
-#    limitations under the License.
-#
-
+# Utiliser l'image de base OpenJDK 17
 FROM openjdk:17.0.2
+
+# Copier le contenu local dans le répertoire de travail dans l'image
 COPY . /usr/src/myapp
+
+# Définir le répertoire de travail
 WORKDIR /usr/src/myapp
+
+# Assurez-vous que le fichier mvnw est exécutable
+RUN chmod +x ./mvnw
+
+# Exécuter la compilation du projet Maven
 RUN ./mvnw clean package
-CMD ./mvnw cargo:run -P tomcat90
+
+# Utiliser la syntaxe JSON recommandée pour CMD afin d'éviter des problèmes de gestion de signaux
+CMD ["./mvnw", "cargo:run", "-P", "tomcat90"]
