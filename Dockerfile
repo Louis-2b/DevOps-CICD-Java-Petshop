@@ -11,7 +11,7 @@ WORKDIR /usr/src/myapp
 RUN chmod +x ./mvnw
 
 # Exécuter la compilation du projet Maven
-RUN ./mvnw clean package
+RUN ./mvnw clean package -X
 
 # Utiliser la syntaxe JSON recommandée pour CMD afin d'éviter des problèmes de gestion de signaux
 CMD ["./mvnw", "cargo:run", "-P", "tomcat90"]
